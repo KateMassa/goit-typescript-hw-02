@@ -8,17 +8,18 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./App.module.css";
+import { Image, AppState, AppProps } from "./App.types";
 
-const App = () => {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(false);
-  const [hasMore, setHasMore] = useState(0);
+const App: React.FC<AppProps> = () => {
+  const [images, setImages] = useState<Image[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<{ message: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [hasMore, setHasMore] = useState<number>(0);
 
-  async function searchImages(inputValue) {
+  async function searchImages(inputValue: string): Promise<void> {
     setQuery(`${Date.now()}/${inputValue}`);
     setImages([]);
     setPage(1);
@@ -29,10 +30,10 @@ const App = () => {
       return;
     }
 
-    async function fetchImages() {
+    async function fetchImages(): Promise<void> {
       try {
         setLoading(true);
-        setError(false);
+        setError(null);
         const response = await getImages(query, page);
         const data = response.data;
         if (!data.results.length) {
@@ -43,7 +44,7 @@ const App = () => {
         setImages((prevImages) => [...prevImages, ...data.results]);
         setHasMore(data.total_pages);
       } catch (error) {
-        setError(true);
+        setError({ message: (error as Error).message });
       } finally {
         setLoading(false);
       }
@@ -51,32 +52,15 @@ const App = () => {
     fetchImages();
   }, [query, page]);
 
-  function handleLoadMore() {
+  function handleLoadMore(): void {
     setPage(page + 1);
   }
 
-  // const loadMoreImages = async () => {
-  //   try {
-  //     const results = await getImages(query, page + 1);
-
-  //     if (!results || results.length === 0) {
-  //       setHasMore(false);
-  //     } else {
-  //       setImages((prevImages) => [...prevImages, ...results]);
-  //       setPage(page + 1);
-  //       setError(null);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error loading more images:", error);
-  //     setError(error);
-  //   }
-  // };
-
-  const openModal = (image) => {
+  const openModal = (image: Image): void => {
     setSelectedImage(image);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setSelectedImage(null);
   };
 
@@ -93,9 +77,9 @@ const App = () => {
           <ImageGallery images={images} openModal={openModal} />
           {selectedImage && (
             <ImageModal
-              isOpen={selectedImage.isModalOpen}
-              bigImage={selectedImage.bigImage}
-              imageDescription={selectedImage.imageDescription}
+              isOpen={selectedImage !== null}
+              bigImage={selectedImage?.urls.regular}
+              imageDescription={selectedImage?.description ?? ""}
               onClose={closeModal}
             />
           )}

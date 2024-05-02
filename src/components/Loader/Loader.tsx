@@ -1,6 +1,7 @@
 import { InfinitySpin } from "react-loader-spinner";
+import { LoaderProps } from "./Loader.types";
 
-const Loader = ({ color = "#4fa94d", width = 200 }) => {
+const Loader: React.FC<LoaderProps> = ({ color = "#4fa94d", width = 200 }) => {
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
       <InfinitySpin
