@@ -8,7 +8,10 @@ export interface Image {
   alt_description: string;
 }
 
-export interface AppProps {}
+export interface AppProps {
+  onSearch: (inputValue: string) => Promise<void>;
+  onReset: () => void;
+}
 
 export interface AppState {
   images: Image[];
