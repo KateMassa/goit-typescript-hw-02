@@ -3,22 +3,15 @@ export interface Image {
   urls: {
     regular: string;
     small: string;
+    big: string;
   };
   description: string;
   alt_description: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export interface AppProps {
   onSearch: (inputValue: string) => Promise<void>;
-  onReset: () => void;
-}
-
-export interface AppState {
   images: Image[];
-  query: string;
-  page: number;
-  loading: boolean;
-  error: boolean;
-  selectedImage: Image | null;
-  hasMore: number;
 }
