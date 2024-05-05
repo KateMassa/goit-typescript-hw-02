@@ -5,11 +5,11 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, onOpen }) => (
       onClick={() =>
         onOpen({
           bigImage: image.urls.regular,
-          imageDescription: image.alt_description ?? "",
+          imageDescription: image.description ?? "",
         })
       }
       src={image.urls.small || image.urls.regular}
-      alt={image.alt_description ?? ""}
+      alt={image.description ?? ""}
     />
   </div>
 );
