@@ -5,6 +5,11 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <App
+      onSearch={function (inputValue: string): Promise<void> {
+        throw new Error("Function not implemented.");
+      }}
+      images={[]}
+    />
   </React.StrictMode>
 );

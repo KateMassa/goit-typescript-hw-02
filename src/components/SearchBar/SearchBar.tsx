@@ -1,7 +1,10 @@
 import { useState, ChangeEvent } from "react";
 import { toast } from "react-hot-toast";
 import css from "./SearchBar.module.css";
-import { SearchBarProps } from "./SearchBar.types";
+
+type SearchBarProps = {
+  onSearch: (inputValue: string) => Promise<void>;
+};
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState("");
