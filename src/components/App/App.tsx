@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Modal from "react-modal";
 import getImages from "../../imagesAPI";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
@@ -8,7 +9,9 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./App.module.css";
-import { Image, AppState, AppProps } from "./App.types";
+import { Image, AppProps } from "./App.types";
+
+Modal.setAppElement("#root");
 
 const App: React.FC<AppProps> = () => {
   const [images, setImages] = useState<Image[]>([]);
@@ -78,9 +81,10 @@ const App: React.FC<AppProps> = () => {
           {selectedImage && (
             <ImageModal
               isOpen={selectedImage !== null}
-              bigImage={selectedImage?.urls.regular}
               imageDescription={selectedImage?.description ?? ""}
               onClose={closeModal}
+              image={selectedImage}
+              bigImage={selectedImage.bigImage}
             />
           )}
           {images.length > 0 && !loading && hasMore > page && (

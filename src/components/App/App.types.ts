@@ -5,6 +5,7 @@ export interface Image {
     small: string;
     big: string;
   };
+  bigImage: string;
   description: string;
   alt_description: string;
   isOpen: boolean;

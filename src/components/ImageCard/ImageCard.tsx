@@ -1,4 +1,9 @@
-import { ImageCardProps } from "./ImageCard.types";
+import { Image } from "../App/App.types";
+
+type ImageCardProps = {
+  image: Image;
+  onOpen: (imageData: { bigImage: string; imageDescription: string }) => void;
+};
 const ImageCard: React.FC<ImageCardProps> = ({ image, onOpen }) => (
   <div>
     <img
