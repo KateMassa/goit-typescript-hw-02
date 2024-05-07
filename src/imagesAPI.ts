@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const API_KEY = "v5dcLxRJ7u0Q_VONRgfry9-HUAtFT6niLLHl2Z0AuaA";
 
-const getImages: (query: string, page: number) => Promise<any> = async (
-  query,
-  page
-) => {
+const getImages = async (
+  query: string,
+  page: number
+): Promise<AxiosResponse> => {
   const response = await axios("https://api.unsplash.com/search/photos", {
     params: {
       client_id: API_KEY,
