@@ -16,3 +16,9 @@ export interface AppProps {
   onSearch: (inputValue: string) => Promise<void>;
   images: Image[];
 }
+
+export type ImageResponse = {
+  total: number;
+  total_pages: number;
+  results: Image[];
+};

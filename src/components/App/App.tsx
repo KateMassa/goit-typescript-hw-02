@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AxiosResponse } from "axios";
 import Modal from "react-modal";
 import getImages from "../../imagesAPI";
 import SearchBar from "../SearchBar/SearchBar";
@@ -9,7 +10,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./App.module.css";
-import { Image, AppProps } from "./App.types";
+import { Image, AppProps, ImageResponse } from "./App.types";
 
 Modal.setAppElement("#root");
 
@@ -37,8 +38,11 @@ const App: React.FC<AppProps> = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await getImages(query, page);
-        const data = response.data;
+        const response: AxiosResponse<ImageResponse> = await getImages(
+          query,
+          page
+        );
+        const data: ImageResponse = response.data;
         if (!data.results.length) {
           toast.error("Oops, something went wrong. Give it another shot.", {
             position: "top-right",
